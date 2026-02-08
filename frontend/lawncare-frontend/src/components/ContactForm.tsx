@@ -21,7 +21,7 @@ const contactFormSchema = Yup.object().shape({
         .required('Preferred contact is required'),
 });
 
-const customersURI = '/api/customers';
+const customersURI = `${import.meta.env.VITE_API_URL}/api/customers`;
 
 // TypeScript type
 export type ContactFormFields = {

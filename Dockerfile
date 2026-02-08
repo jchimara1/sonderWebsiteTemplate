@@ -4,7 +4,7 @@ WORKDIR /frontend
 
 # install deps
 COPY frontend/lawncare-frontend/package*.json ./
-RUN npm ci
+RUN npm install
 
 # copy source + build
 COPY frontend/lawncare-frontend/ ./

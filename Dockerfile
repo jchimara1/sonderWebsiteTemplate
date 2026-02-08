@@ -19,7 +19,8 @@ WORKDIR /app
 COPY backend/ ./backend/
 
 # copy built frontend into Spring Boot static resources
-COPY --from=fe-build /frontend/dist ./backend/src/main/resources/static
+COPY --from=fe-build /frontend/build ./backend/src/main/resources/static
+
 
 # build spring boot jar
 WORKDIR /app/backend

@@ -1,0 +1,11 @@
+services:
+  postgres-db:
+    container_name: lawnCare
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lawnCare_justice
+      POSTGRES_PASSWORD: lawnCare_chimara
+      POSTGRES_DB: lawnCare
+    ports:
+      - "5432:5432"

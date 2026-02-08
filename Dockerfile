@@ -4,11 +4,11 @@ WORKDIR /frontend
 
 # install deps
 COPY frontend/lawncare-frontend/package*.json ./
-RUN npm install
+RUN yarn install
 
 # copy source + build
 COPY frontend/lawncare-frontend/ ./
-RUN npm run build
+RUN yarn build
 
 
 # ---------- build backend ----------

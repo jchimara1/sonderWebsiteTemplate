@@ -65,38 +65,41 @@ const postEvent = async (
         const apiResponse = await axiosInstance.post(customersURI, event);
 
 
-        const emailName = getValues().firstName
-
-        const address = getValues().email
-
-        const phone = getValues().phone
-
-        const message = `Thank you for reaching out we are accessing your area to give you an accurate quote we will reach out shortly to you at ${phone}`
-
-        const res = await fetch(`${import.meta.env.VITE_API_URL}api/contact`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({emailName,address,phone,message})
-        })
-
-        const data = await res.json().catch(() => ({}));
-
-        if (!res.ok) {
-            throw new Error(data.error || "Failed to send request");
-        }
-
-        alert("Request sent successfully!");
-
         return apiResponse.data;
     };
 
 
     const onSubmit = async (data: ContactFormFields) => {
-        console.log('Form Data:', data);
-       await postEvent(data)
 
+        const name = getValues().firstName
+
+        const email = getValues().email
+
+        const phone = getValues().phone
+
+        const message = `Thank you for reaching out we are accessing your area to give you an accurate quote we will reach out shortly to you at ${phone}`
+
+        console.log({name,email,phone,message})
+        const res = await fetch(`${import.meta.env.VITE_API_URL}api/contact`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({name,email,phone,message})
+        })
+
+        const dataRes = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+            throw new Error(dataRes.error || "Failed to send request");
+        }
+
+        alert("Request sent successfully!");
+
+
+        console.log('email being sent'+{emailName,address,phone,message})
+
+        await postEvent(data)
      };
 
     return (

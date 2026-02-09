@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { TextField, Button, MenuItem, Box, Typography } from '@mui/material';
 import axiosInstance from "../utils/AxiosInstance.ts";
-import {useState} from "react";
 
 // Yup schema
 const contactFormSchema = Yup.object().shape({
@@ -24,7 +23,6 @@ const contactFormSchema = Yup.object().shape({
 
 const customersURI = `${import.meta.env.VITE_API_URL}api/customers`;
 
-const [emailInfo, setEmailInfo] = useState<ContactFormFields>()
 
 // TypeScript type
 export type ContactFormFields = {
@@ -42,46 +40,12 @@ export type ContactFormFields = {
 
 
 
-export const postEvent = async (
-    event: ContactFormFields
-): Promise<ContactFormFields> => {
-    const apiResponse = await axiosInstance.post(customersURI, event);
-
-    setEmailInfo(event)
-
-    const emailName = emailInfo?.firstName
-
-    const address = emailInfo?.email
-
-    const phone = emailInfo?.phone
-
-    const message = `Thank you for reaching out we are accessing your area to give you an accurate quote we will reach out shortly to you at ${phone}`
-
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({emailName,address,phone,message})
-    })
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
-        throw new Error(data.error || "Failed to send request");
-    }
-
-    alert("Request sent successfully!");
-
-    return apiResponse.data;
-};
-
 
 
 
 // Component
 const BasicMuiForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<ContactFormFields>({
+    const { register, handleSubmit, getValues,formState: { errors } } = useForm<ContactFormFields>({
         defaultValues: {
             firstName: '',
             lastName: '',
@@ -94,6 +58,40 @@ const BasicMuiForm = () => {
         },
         resolver: yupResolver(contactFormSchema),
     });
+
+const postEvent = async (
+        event: ContactFormFields
+    ): Promise<ContactFormFields> => {
+        const apiResponse = await axiosInstance.post(customersURI, event);
+
+
+        const emailName = getValues().firstName
+
+        const address = getValues().email
+
+        const phone = getValues().phone
+
+        const message = `Thank you for reaching out we are accessing your area to give you an accurate quote we will reach out shortly to you at ${phone}`
+
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({emailName,address,phone,message})
+        })
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+            throw new Error(data.error || "Failed to send request");
+        }
+
+        alert("Request sent successfully!");
+
+        return apiResponse.data;
+    };
+
 
     const onSubmit = async (data: ContactFormFields) => {
         console.log('Form Data:', data);

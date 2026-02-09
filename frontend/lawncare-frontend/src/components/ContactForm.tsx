@@ -73,7 +73,7 @@ const postEvent = async (
 
         const message = `Thank you for reaching out we are accessing your area to give you an accurate quote we will reach out shortly to you at ${phone}`
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}api/contact`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

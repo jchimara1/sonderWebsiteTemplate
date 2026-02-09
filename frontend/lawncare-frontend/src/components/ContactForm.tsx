@@ -79,7 +79,6 @@ const postEvent = async (
 
         const message = `Thank you for reaching out we are accessing your area to give you an accurate quote we will reach out shortly to you at ${phone}`
 
-        console.log({name,email,phone,message})
         const res = await fetch(`${import.meta.env.VITE_API_URL}api/contact`, {
             method: "POST",
             headers: {
@@ -97,7 +96,6 @@ const postEvent = async (
         alert("Request sent successfully!");
 
 
-        console.log('email being sent'+{emailName,address,phone,message})
 
         await postEvent(data)
      };

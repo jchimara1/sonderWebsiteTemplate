@@ -32,3 +32,5 @@ spring:
           auth: true
           ssl:
             enable: true
+  resend:
+    api-key: ${RESEND_API_KEY}

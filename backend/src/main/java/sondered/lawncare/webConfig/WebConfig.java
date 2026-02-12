@@ -8,8 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("https://sonderwebsitetemplate.onrender.com")
+        registry.addMapping("/api/**")
+                .allowedOrigins(
+                        "http://localhost:5173",
+                        "https://sonderwebsitetemplate.onrender.com"
+                )
                 .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);

@@ -22,6 +22,29 @@ const contactFormSchema = Yup.object().shape({
 });
 
 const customersURI = `${import.meta.env.VITE_API_URL}api/customers`;
+console.log(customersURI)
+
+
+type EmailPayload = { email: string; name?: string };
+
+const sendEmail = async (payload: EmailPayload) => {
+    const res = await fetch("/api/emails", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+    });
+
+    const text = await res.text(); // read body no matter what
+
+    if (!res.ok) {
+        console.error("Email API failed:", res.status, text);
+        throw new Error(`Email request failed: ${res.status} ${text}`);
+    }
+
+    console.log("Email API success:", text);
+    return text;
+};
+
 
 
 // TypeScript type
@@ -45,7 +68,7 @@ export type ContactFormFields = {
 
 // Component
 const BasicMuiForm = () => {
-    const { register, handleSubmit, getValues,formState: { errors } } = useForm<ContactFormFields>({
+    const { register, handleSubmit,getValues, setValue,formState: { errors } } = useForm<ContactFormFields>({
         defaultValues: {
             firstName: '',
             lastName: '',
@@ -64,39 +87,28 @@ const postEvent = async (
     ): Promise<ContactFormFields> => {
         const apiResponse = await axiosInstance.post(customersURI, event);
 
-
         return apiResponse.data;
+
     };
 
 
     const onSubmit = async (data: ContactFormFields) => {
 
-        const name = getValues().firstName
-
-        const email = getValues().email
-
-        const phone = getValues().phone
-
-        const message = `Thank you for reaching out we are accessing your area to give you an accurate quote we will reach out shortly to you at ${phone}`
-
-        const res = await fetch(`${import.meta.env.VITE_API_URL}api/contact`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({name,email,phone,message})
-        })
-
-        const dataRes = await res.json().catch(() => ({}));
-
-        if (!res.ok) {
-            throw new Error(dataRes.error || "Failed to send request");
-        }
-
-        alert("Request sent successfully!");
+        await sendEmail({email:getValues('email'), name:getValues('firstName')})
 
 
+        setValue('firstName', '')
+        setValue('email', '')
+        setValue('message', '')
+        setValue('phone', '')
+        setValue('address', '')
+        setValue('serviceType', '')
+        setValue('lastName', '')
+        setValue('preferredContact', 'email')
 
+        setTimeout(()=> {
+            alert("Request sent successfully!");
+        }, 5000)
         await postEvent(data)
      };
 

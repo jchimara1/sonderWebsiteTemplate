@@ -1,5 +1,5 @@
 
-import { useForm } from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { TextField, Button, MenuItem, Box, Typography } from '@mui/material';
@@ -8,7 +8,6 @@ import axiosInstance from "../utils/AxiosInstance.ts";
 // Yup schema
 const contactFormSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
-    lastName: Yup.string().required('Last name is required'),
     email: Yup.string().required('Email is required').email('Invalid email'),
     phone: Yup.string()
         .required('Phone number is required')
@@ -22,7 +21,7 @@ const contactFormSchema = Yup.object().shape({
 });
 
 const customersURI = `${import.meta.env.VITE_API_URL}api/customers`;
-console.log(customersURI)
+
 
 
 type EmailPayload = { email: string; name?: string };
@@ -50,7 +49,6 @@ const sendEmail = async (payload: EmailPayload) => {
 // TypeScript type
 export type ContactFormFields = {
     firstName: string;
-    lastName: string;
     email: string;
     phone: string;
     message: string;
@@ -68,10 +66,9 @@ export type ContactFormFields = {
 
 // Component
 const BasicMuiForm = () => {
-    const { register, handleSubmit,getValues, setValue,formState: { errors } } = useForm<ContactFormFields>({
+    const {control, register, handleSubmit,getValues, setValue,formState: { errors } } = useForm<ContactFormFields>({
         defaultValues: {
             firstName: '',
-            lastName: '',
             email: '',
             phone: '',
             message: '',
@@ -103,7 +100,7 @@ const postEvent = async (
         setValue('phone', '')
         setValue('address', '')
         setValue('serviceType', '')
-        setValue('lastName', '')
+        setValue('serviceType', '')
         setValue('preferredContact', 'email')
 
         setTimeout(()=> {
@@ -132,19 +129,13 @@ const postEvent = async (
             <Typography variant="h5" fontWeight="bold" mb={2} sx={{color: 'grey'}}>
                 Get A Free Quote
             </Typography>
-
+<Box display={'flex'} flexDirection={'row'} >
             <TextField
                 {...register('firstName')}
-                label="First Name"
+                label="Name"
                 error={!!errors.firstName}
                 helperText={errors.firstName?.message}
-            />
-
-            <TextField
-                {...register('lastName')}
-                label="Last Name"
-                error={!!errors.lastName}
-                helperText={errors.lastName?.message}
+                fullWidth
             />
 
             <TextField
@@ -152,14 +143,51 @@ const postEvent = async (
                 label="Email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
+                fullWidth
+
             />
 
+</Box>
+
+            <Box display={'flex'} flexDirection={'row'}>
             <TextField
                 {...register('phone')}
                 label="Phone"
                 error={!!errors.phone}
                 helperText={errors.phone?.message}
+                fullWidth
             />
+
+            <TextField
+                {...register('address')}
+                label="Address"
+                error={!!errors.address}
+                helperText={errors.address?.message}
+                fullWidth
+            />
+
+
+            </Box>
+
+
+            <TextField
+                select
+                {...register('serviceType')}
+                label="Select a service"
+                error={!!errors.serviceType}
+                helperText={errors.serviceType?.message}
+                defaultValue=""
+            >
+                <MenuItem value="furniture_removal">Furniture Removal</MenuItem>
+                <MenuItem value="appliance_removal">Appliance Removal</MenuItem>
+                <MenuItem value="mattress_removal">Mattress Removal</MenuItem>
+                <MenuItem value="yard_waste">Yard Waste Removal</MenuItem>
+                <MenuItem value="garage_cleanout">Garage Cleanout</MenuItem>
+                <MenuItem value="moving_cleanout">Moving Cleanout</MenuItem>
+                <MenuItem value="estate_cleanout">Estate Cleanout</MenuItem>
+                <MenuItem value="general_junk">General Junk Removal</MenuItem>
+                <MenuItem value="not_sure"> Need Estimate</MenuItem>
+            </TextField>
 
             <TextField
                 {...register('message')}
@@ -170,31 +198,24 @@ const postEvent = async (
                 helperText={errors.message?.message}
             />
 
-            <TextField
-                {...register('serviceType')}
-                label="Service Type"
-                error={!!errors.serviceType}
-                helperText={errors.serviceType?.message}
+
+            <Controller
+                name="preferredContact"
+                control={control}
+                defaultValue="email"
+                render={({ field }) => (
+                    <TextField
+                        select
+                        {...field}
+                        label="Preferred Contact"
+                        error={!!errors.preferredContact}
+                        helperText={errors.preferredContact?.message}
+                    >
+                        <MenuItem value="email">Email</MenuItem>
+                        <MenuItem value="phone">Phone</MenuItem>
+                    </TextField>
+                )}
             />
-
-            <TextField
-                {...register('address')}
-                label="Address"
-                error={!!errors.address}
-                helperText={errors.address?.message}
-            />
-
-            <TextField
-                select
-                {...register('preferredContact')}
-                label="Preferred Contact"
-                error={!!errors.preferredContact}
-                helperText={errors.preferredContact?.message}
-            >
-                <MenuItem value="email">Email</MenuItem>
-                <MenuItem value="phone">Phone</MenuItem>
-            </TextField>
-
             <Button type="submit" variant="contained" color="primary">
                 Submit
             </Button>

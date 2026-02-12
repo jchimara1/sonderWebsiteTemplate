@@ -17,8 +17,10 @@ public class CorsConfig {
                                 "http://localhost:5173",
                                 "https://sonderwebsitetemplate.onrender.com"
                         )
-                        .allowedMethods("POST", "OPTIONS")
-                        .allowedHeaders("*");
+                        .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+
             }
         };
     }

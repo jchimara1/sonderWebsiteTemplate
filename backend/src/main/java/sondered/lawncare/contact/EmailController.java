@@ -25,9 +25,14 @@ public class EmailController {
 
         try {
             String id = resendEmailService.sendConfirmation(req.email(), req.name());
+
+            System.out.println("RESEND sent id=" + id + " to=" + req.email());
+
             return ResponseEntity.ok().body(id);
         } catch (ResendException e) {
+            System.out.println("RESEND error: " + e.getMessage());
             return ResponseEntity.status(500).body("Resend error: " + e.getMessage());
         }
+
     }
 }

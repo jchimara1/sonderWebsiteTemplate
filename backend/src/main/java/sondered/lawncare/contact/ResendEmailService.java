@@ -13,8 +13,11 @@ public class ResendEmailService {
     private final Resend resend;
 
     public ResendEmailService(@Value("${resend.api-key}") String apiKey) {
+        System.out.println("RESEND key loaded (len=" + apiKey.length() +
+                ", last4=" + apiKey.substring(Math.max(0, apiKey.length() - 4)) + ")");
         this.resend = new Resend(apiKey);
     }
+
 
     public String sendConfirmation(String toEmail, String name) throws ResendException {
         String safeName = (name == null || name.isBlank()) ? "there" : name;

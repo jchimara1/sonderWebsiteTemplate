@@ -31,7 +31,7 @@ console.log("EMAIL POST URL =", url);
 type EmailPayload = { email: string; name?: string };
 
 const sendEmail = async (payload: EmailPayload) => {
-    return  await fetch("/api/emails", {
+    return  await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

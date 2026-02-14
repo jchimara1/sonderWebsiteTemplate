@@ -84,7 +84,8 @@ const postEvent = async (
         try {
             console.log("about to call backend");
             const res = await sendEmail({email:getValues('email'), name:getValues('firstName')})
-            console.log("backend response", res.status);
+            console.log("backend response", res.json());
+            console.log("headers", res.headers);
         } catch (e) {
             console.error("fetch failed", e);
         }

@@ -27,20 +27,12 @@ const customersURI = `${import.meta.env.VITE_API_URL}api/customers`;
 type EmailPayload = { email: string; name?: string };
 
 const sendEmail = async (payload: EmailPayload) => {
-    const res = await fetch("/api/emails", {
+    return  await fetch("/api/emails", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-    });
 
-    const text = await res.text(); // read body no matter what
-
-    if (!res.ok) {
-        console.error("Email API failed:", res.status, text);
-        throw new Error(`Email request failed: ${res.status} ${text}`);
-    }
-    return text;
-};
+})};
 
 
 
@@ -89,8 +81,13 @@ const postEvent = async (
 
     const onSubmit = async (data: ContactFormFields) => {
 
-        await sendEmail({email:getValues('email'), name:getValues('firstName')})
-
+        try {
+            console.log("about to call backend");
+            const res = await sendEmail({email:getValues('email'), name:getValues('firstName')})
+            console.log("backend response", res.status);
+        } catch (e) {
+            console.error("fetch failed", e);
+        }
 
         setValue('firstName', '')
         setValue('email', '')
@@ -100,10 +97,6 @@ const postEvent = async (
         setValue('serviceType', '')
         setValue('serviceType', '')
         setValue('preferredContact', 'email')
-
-        setTimeout(()=> {
-            alert("Request sent successfully!");
-        }, 5000)
         await postEvent(data)
      };
 

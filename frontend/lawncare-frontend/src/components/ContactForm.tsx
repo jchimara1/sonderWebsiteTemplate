@@ -39,8 +39,6 @@ const sendEmail = async (payload: EmailPayload) => {
         console.error("Email API failed:", res.status, text);
         throw new Error(`Email request failed: ${res.status} ${text}`);
     }
-
-    console.log("Email API success:", text);
     return text;
 };
 

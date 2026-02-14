@@ -22,6 +22,10 @@ const contactFormSchema = Yup.object().shape({
 
 const customersURI = `${import.meta.env.VITE_API_URL}api/customers`;
 
+console.log("VITE_API_URL =", import.meta.env.VITE_API_URL);
+
+const url = `${import.meta.env.VITE_API_URL}api/emails`;
+console.log("EMAIL POST URL =", url);
 
 
 type EmailPayload = { email: string; name?: string };

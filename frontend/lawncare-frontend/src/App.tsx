@@ -1,54 +1,26 @@
 
 import './App.css'
-import {AppBar, Box, Button, Toolbar, Typography} from "@mui/material";
+import {Box, useMediaQuery} from "@mui/material";
 import ContactForm from "./components/ContactForm.tsx";
+import Navbar from "./components/NavBar.tsx";
+import Hero from "./components/Hero.tsx";
+
 
 
 function App() {
+
+    const isMobile = useMediaQuery("(max-width:900px)");
     return (
         <>
 
-            <Box sx={{ minHeight: "100vh", minWidth: 'auto'}}>
+
                 {/* Buttons at top */}
 
-                <AppBar
-                    position="fixed"
-                    sx={{
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)', // semi-transparent
-                        backdropFilter: 'blur(10px)',               // blur effect
-                        WebkitBackdropFilter: 'blur(10px)',
-                        zIndex: (theme: any) => theme.zIndex.drawer + 1,
-                        boxShadow: 'none',
-                        border: 'none',
+                <Navbar />
+                {isMobile ?
+                    (<><br/><br/><br/><br/></>) : (<><br/><br/><br/><br/><br/><br/><br/><br/></>) }
 
-                    }}
-                >
-
-
-                    <Toolbar>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%', height: 80 , alignItems: 'center'}}>
-                            <Button
-                                color="inherit"
-                                sx={{
-                                    textTransform: "none",       // Keep text as typed
-                                    alignItems: "center",        // Vertically center icon + text
-                                }}
-                            >
-                                <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-                                    <Typography variant="h6" fontWeight="bold">
-                                        Sonder
-                                    </Typography>
-                                    <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                                        Lawn & Landscape
-                                    </Typography>
-                                </Box>
-                            </Button>
-                            <Typography>xxx-xxx-xxxx</Typography>
-                        </Box>
-                    </Toolbar>
-
-
-                </AppBar>
+                <Hero/>
 
                 {/* Rest of page content */}
                 <Box sx={{ p: 4,  mt: 6}}>
@@ -60,7 +32,7 @@ function App() {
 
 
 
-            </Box>
+
 
 
 

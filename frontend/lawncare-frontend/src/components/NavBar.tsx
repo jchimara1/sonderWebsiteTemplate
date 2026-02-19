@@ -1,131 +1,169 @@
-import * as React from "react";
 import {
     AppBar,
-    Toolbar,
     Box,
     Button,
-    IconButton,
-    Typography,
-    Container,
-    Menu,
-    MenuItem,
-    useMediaQuery,
+    Container, IconButton,
+    Link, Menu, MenuItem,
+    Toolbar, useMediaQuery,
+
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import PhoneIcon from "@mui/icons-material/Phone";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import logo from "../assets/garbageTruckLogo.png";
+import {useState} from "react";
 
-// Put your logo in src/assets/logo.png
-import logo from "../assets/512JunkRemoval.png";
 
-const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Services", href: "#services" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Testimonials", href: "#testimonials" },
-];
+export default function NavBar() {
 
-export default function Navbar() {
     const isMobile = useMediaQuery("(max-width:900px)");
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const navItems = [
+        { label: "Home", href: "#home" },
+        { label: "Services", href: "#services", dropdown: true },
+        { label: "Gallery", href: "#gallery" },
+        { label: "Testimonials", href: "#testimonials" },
+    ]
+
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const openMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
     const closeMenu = () => setAnchorEl(null);
 
     return (
         <AppBar
-            position="fixed"
+            position="absolute"
             elevation={0}
             sx={{
                 bgcolor: "transparent",
-                height: 30,
-                color: "black",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-
+                // dark, slightly glossy gradient like the detailing site
+                backgroundImage:
+                    "linear-gradient(180deg, rgba(35,35,35,0.98) 0%, rgba(20,20,20,0.98) 100%)",
+                borderBottom: "1px solid rgba(255,255,255,0.08)",
+                // subtle top highlight line
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
             }}
         >
-            <Container maxWidth="lg">
-                <Toolbar sx={{ minHeight: 80, display: "flex", gap: 2 }}>
-                    {/* Left: Logo */}
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flexShrink: 0 }}>
+            <Toolbar
+                disableGutters
+                sx={{
+                    minHeight: 88,
+                    px: { xs: 2, md: 3 },
+                }}
+            >
+                <Container
+                    maxWidth="lg"
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 2,
+                    }}
+                >
+                    {/* LEFT: LOGO */}
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                        {/* replace with your logo image if you have one */}
                         <Box
                             component="img"
                             src={logo}
-                            alt="512 Junk Removal"
-                            sx={{
-                                mb:2,
-                                height: {
-                                    xs: 100, // Full width on extra-small screens
-                                    sm: 100,
-                                    md: 200, // 300px width on medium screens and up
-                                }, display: "block" }}
+                            alt="Logo"
+                            sx={{ height: 100, width: "auto" }}
                         />
                     </Box>
 
-                    {/* Center: Links (desktop) */}
-                    {!isMobile && (
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 3,
-                                flexGrow: 1,
-                                justifyContent: "center",
-                            }}
-                        >
-                            {navItems.map((item) => (
+                    {/* CENTER: NAV */}
+
+                    { !isMobile ?
+                    <Box
+                        sx={{
+                            display: { xs: "none", md: "flex" },
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flex: 1,
+                            gap: 3,
+                        }}
+                    >
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.label}
+                                href="#"
+                                underline="none"
+                                sx={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: 0.5,
+                                    color: "rgba(255,255,255,0.92)",
+                                    fontSize: 13,
+                                    fontWeight: 500,
+                                    letterSpacing: "0.10em",
+                                    textTransform: "uppercase",
+                                    py: 1,
+                                    transition: "color 150ms ease",
+                                    "&:hover": { color: "#fff" },
+                                }}
+                            >
+                                {item.label}
+                                {item.dropdown ? (
+                                    <KeyboardArrowDownRoundedIcon sx={{ fontSize: 18, opacity: 0.9 }} />
+                                ) : null}
+                            </Link>
+                        ))}
+                    </Box> :
+                        (
+                        <>
+                        <IconButton size={'large'} sx={{width:100}} onClick={openMenu} aria-label="menu">
+                    <MenuIcon sx={{color: 'white'}} fontSize='large'/>
+                </IconButton>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={closeMenu}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}
+                >
+                    {navItems.map((item) => (
+                        <MenuItem key={item.label} onClick={closeMenu} component="a" href={item.href}>
+                            {item.label}
+                        </MenuItem>
+                    ))}
+                    <MenuItem onClick={closeMenu} component="a" href="tel:+15125557890">
+                        Call (512) 555-7890
+                    </MenuItem>
+                </Menu>
+            </>
+
+                        )   }
+
+
+                    {/* RIGHT: CTA */}
+                    {
+                        isMobile ?
+                            null :
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                                 <Button
-                                    key={item.label}
-                                    href={item.href}
+                                    variant="contained"
+                                    disableElevation
                                     sx={{
-                                        color: "rgba(0,0,0,0.75)",
-                                        textTransform: "none",
-                                        fontWeight: 600,
-                                        "&:hover": { bgcolor: "rgba(0,0,0,0.06)" },
+                                        backgroundColor: "#e5e5e5",
+                                        color: "#1a1a1a",
+                                        borderRadius: "14px",
+                                        px: 3,
+                                        py: 1.4,
+                                        fontWeight: 700,
+                                        fontSize: 13,
+                                        letterSpacing: "0.10em",
+                                        textTransform: "uppercase",
+                                        boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+                                        "&:hover": {
+                                            backgroundColor: "#dcdcdc",
+                                            boxShadow: "0 10px 24px rgba(0,0,0,0.32)",
+                                        },
                                     }}
                                 >
-                                    {item.label}
+                                    GET A QUOTE
                                 </Button>
-                            ))}
-                        </Box>
-                    )}
-
-                    {/* Right: Phone + CTA */}
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, ml: "auto" }}>
-                        {!isMobile && (
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                <PhoneIcon fontSize="small" />
-                                <Typography sx={{ fontWeight: 500 }}>(512) 555-7890</Typography>
                             </Box>
-                        )}
-
-                        {/* Mobile menu button */}
-                        {isMobile && (
-                            <>
-                                <IconButton size={'large'} sx={{width:100}} onClick={openMenu} aria-label="menu">
-                                    <MenuIcon fontSize='large'/>
-                                </IconButton>
-                                <Menu
-                                    anchorEl={anchorEl}
-                                    open={Boolean(anchorEl)}
-                                    onClose={closeMenu}
-                                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                                    transformOrigin={{ vertical: "top", horizontal: "right" }}
-                                >
-                                    {navItems.map((item) => (
-                                        <MenuItem key={item.label} onClick={closeMenu} component="a" href={item.href}>
-                                            {item.label}
-                                        </MenuItem>
-                                    ))}
-                                    <MenuItem onClick={closeMenu} component="a" href="tel:+15125557890">
-                                        Call (512) 555-7890
-                                    </MenuItem>
-                                </Menu>
-                            </>
-                        )}
-                    </Box>
-                </Toolbar>
-            </Container>
+                    }
+                </Container>
+            </Toolbar>
         </AppBar>
     );
 }

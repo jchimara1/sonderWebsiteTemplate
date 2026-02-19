@@ -18,9 +18,11 @@ function App() {
 
                 <Navbar />
                 {isMobile ?
-                    (<><br/><br/><br/><br/></>) : (<><br/><br/><br/><br/><br/><br/><br/><br/></>) }
+                    (<><br/><br/><br/><br/></>) : (<><br/><br/><br/><br/><br/></>) }
 
                 <Hero/>
+<br/><br/><br/>
+            <Hero/>
 
                 {/* Rest of page content */}
                 <Box sx={{ p: 4,  mt: 6}}>

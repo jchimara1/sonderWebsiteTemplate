@@ -9,46 +9,43 @@ export default function Hero() {
             <Container className="hero-container">
                 <div className="hero-content">
                     <h1 className="hero-title">
-                        Fast &amp; Affordable
-                        <br />
-                        Junk Removal
-                        <br />
-                        in Austin, TX
+                        PROFESSIONAL JUNK REMOVAL SERVICES DELIVERED TO YOUR DOORSTEP
                     </h1>
 
                     <p className="hero-sub">
-                        Same-day service • Cleanouts
-                        <br />
-
-                        Hauling • Yard Debris
+                        brings fast, reliable junk removal directly to you—residential cleanouts, furniture and appliance removal, yard debris hauling, and full property cleanups handled with precision and care. Serving Austin, Texas and surrounding communities, we’re known for professional service, transparent pricing, and leaving every space cleaner than we found it.
                     </p>
 
                     <div className="hero-actions">
-                        <Button variant="contained" sx={{
-                            background: 'linear-gradient(  180deg,\n' +
-                                '  #6FA043 0%,\n' +
-                                '  #4F7F2F 100%)',
-                            boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
-                            fontWeight: 1000,
-
-                            color: 'white'}} >
-                            Get a Free Estimate
+                        <Button
+                            variant="contained"
+                            disableElevation
+                            sx={{
+                                backgroundColor: "rgba(0, 0, 0, 0.65)",
+                                backdropFilter: "blur(6px)",
+                                WebkitBackdropFilter: "blur(6px)",
+                                color: "#fff",
+                                borderRadius: "14px",
+                                px: 3,
+                                py: 1.4,
+                                fontWeight: 600,
+                                fontSize: "14px",
+                                letterSpacing: "0.08em",
+                                textTransform: "uppercase",
+                                boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+                                border: "1px solid rgba(255,255,255,0.08)",
+                                "&:hover": {
+                                    backgroundColor: "rgba(0, 0, 0, 0.8)",
+                                    boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                                },
+                            }}
+                        >
+                            GET A QUOTE
                         </Button>
 
                     </div>
                 </div>
 
-                <div className="hero-badge" aria-hidden="true">
-                    <div className="hero-badge-inner">
-                        <div className="hero-badge-stars">★ ★ ★</div>
-                        <div className="hero-badge-text">
-                            SAME-DAY
-                            <br />
-                            SERVICE
-                        </div>
-                        <div className="hero-badge-check">✓</div>
-                    </div>
-                </div>
             </Container>
         </section>
     );

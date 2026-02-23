@@ -94,7 +94,7 @@ body,
   align-items: center;
   color: #fff;
 
-  background-image: url("../public/trashOnCurb.png");
+  background-image: url("../public/splashPageLawnMower.jpg");
   background-size: cover;
   background-position: center 75%;
   background-repeat: no-repeat;
@@ -217,7 +217,128 @@ body,
   line-height: 1;
 }
 
-/* Responsive */
+/* ========================================= */
+/* FULL-BLEED CAROUSEL (MATCH HERO WIDTH) */
+/* ========================================= */
+
+/*
+  Use this wrapper around your carousel section:
+  <section class="carousel-bleed">
+    <div class="carousel-wrap"> ... </div>
+  </section>
+*/
+.carousel-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  position: relative;
+  background: #222121;
+}
+
+.carousel-wrap {
+  position: relative;
+  width: 100%;
+
+}
+
+/* Slide/card becomes an image hero panel */
+.carousel-slide {
+  position: relative;
+  width: 100%;
+
+  min-height: 700px; /* desktop height */
+  border-radius: 0;
+  background-size: cover;
+  background-position: center 75%;
+}
+
+/* overlay for readability */
+.carousel-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.62) 0%,
+          rgba(0, 0, 0, 0.28) 55%,
+          rgba(0, 0, 0, 0.08) 100%
+  );
+}
+
+/* content area (leave room for arrows) */
+.carousel-content {
+  position: absolute;
+  right: 160px;
+  bottom: 44px;
+  color: white;
+  max-width: 860px;
+  z-index: 2;
+}
+
+.carousel-title {
+  margin: 0 0 10px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-size: clamp(26px, 3.2vw, 46px);
+}
+
+.carousel-desc {
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 720px;
+}
+
+
+
+.carousel-cta:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Arrow buttons (same style you want) */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.carousel-nav:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.carousel-nav--left {
+  left: 16px;
+}
+
+.carousel-nav--right {
+  right: 16px;
+}
+
+/* optionally hide the dots if your library adds them */
+.carousel-dots {
+  display: none;
+}
+
+/* ========================================= */
+/* RESPONSIVE */
+/* ========================================= */
 
 @media (max-width: 900px) {
   .hero {
@@ -243,5 +364,63 @@ body,
     height: 92px;
     top: -10px;
     right: 18px;
+  }
+
+  /* Carousel: reduce height + tighten spacing */
+  .carousel-slide {
+    height: 420px;
+    background-position: center;
+  }
+
+  .carousel-content {
+    left: 18px;
+    right: 18px; /* no arrow overlap on small screens */
+    bottom: 18px;
+  }
+
+  /* Smaller arrows + move slightly inward */
+  .carousel-nav {
+    width: 56px;
+    height: 56px;
+  }
+
+  .carousel-nav--left {
+    left: 10px;
+  }
+
+  .carousel-nav--right {
+    right: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: 760px;
+  }
+
+  .hero-title {
+    font-size: 22px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+  }
+
+  /* Carousel mobile: make it feel like a hero */
+  .carousel-slide {
+    height: 360px;
+  }
+
+  .carousel-title {
+    font-size: 22px;
+  }
+
+  .carousel-desc {
+    font-size: 14px;
+  }
+
+  /* Optional: hide arrows on very small screens (use swipe) */
+  .carousel-nav {
+    display: none;
   }
 }

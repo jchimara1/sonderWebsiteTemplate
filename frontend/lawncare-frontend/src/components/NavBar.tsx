@@ -142,7 +142,7 @@ export default function NavBar() {
                                     variant="contained"
                                     disableElevation
                                     sx={{
-                                        backgroundColor: "#e5e5e5",
+                                        backgroundColor: "rgba(244,221,95,0.65)",
                                         color: "#1a1a1a",
                                         borderRadius: "14px",
                                         px: 3,

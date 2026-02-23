@@ -21,10 +21,10 @@ export default function Hero() {
                             variant="contained"
                             disableElevation
                             sx={{
-                                backgroundColor: "rgba(0, 0, 0, 0.65)",
+                                backgroundColor: "rgba(244,221,95,0.65)",
                                 backdropFilter: "blur(6px)",
                                 WebkitBackdropFilter: "blur(6px)",
-                                color: "#fff",
+                                color: "#000000",
                                 borderRadius: "14px",
                                 px: 3,
                                 py: 1.4,

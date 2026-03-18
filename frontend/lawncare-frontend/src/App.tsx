@@ -1,40 +1,23 @@
 
-import './App.css'
-import { useMediaQuery} from "@mui/material";
-import Navbar from "./components/NavBar.tsx";
-import Hero from "./components/Hero.tsx";
-import HeroTwo from "./components/HeroTwo.tsx";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from "./HomePage.tsx";
+import ContactForm from "./components/ContactForm.tsx";
+import ServicePage from "./components/ServicePage.tsx";
 
 
 
 function App() {
-
-    const isMobile = useMediaQuery("(max-width:900px)");
     return (
-        <>
+        <BrowserRouter>
 
 
-                {/* Buttons at top */}
-
-                <Navbar />
-                {isMobile ?
-                    (<><br/><br/><br/><br/></>) : (<><br/><br/><br/><br/><br/></>) }
-
-                <Hero/>
-<br/><br/>
-            <HeroTwo/>
-
-
-
-
-
-
-
-
-
-
-        </>
+            {/* Routes */}
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services" element={<ServicePage />} />
+                <Route path="/contact" element={<ContactForm />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
-
 export default App;

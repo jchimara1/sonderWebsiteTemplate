@@ -18,9 +18,8 @@ export default function NavBar() {
     const isMobile = useMediaQuery("(max-width:900px)");
     const navItems = [
         { label: "Home", href: "#home" },
-        { label: "Services", href: "#services", dropdown: true },
-        { label: "Gallery", href: "#gallery" },
-        { label: "Testimonials", href: "#testimonials" },
+        { label: "Services", href: "services", dropdown: true },
+        { label: "Contact", href: "contact" },
     ]
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

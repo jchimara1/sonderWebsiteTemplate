@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light;
-  color: #111;
+  color: rgba(17, 17, 17, 0.3);
   background-color: #222121; /* soft neutral grey */
 
   font-synthesis: none;
@@ -76,7 +76,7 @@ button:focus-visible {
 html,
 body,
 #root {
-  background-color: #222121;
+  background-color: rgba(34, 33, 33, 0.26);
   margin: 0;
   padding: 0;
 }

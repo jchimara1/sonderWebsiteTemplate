@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { TextField, Button, MenuItem, Box, Typography } from '@mui/material';
 import axiosInstance from "../utils/AxiosInstance.ts";
+import NavBar from "./NavBar.tsx";
 
 // Yup schema
 const contactFormSchema = Yup.object().shape({
@@ -114,6 +115,10 @@ const postEvent = async (
      };
 
     return (
+
+        <>
+            <NavBar/>
+            <br/><br/>
         <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
@@ -224,6 +229,7 @@ const postEvent = async (
                 Submit
             </Button>
         </Box>
+        </>
     );
 };
 

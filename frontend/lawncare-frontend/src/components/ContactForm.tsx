@@ -2,7 +2,7 @@
 import {Controller, useForm} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { TextField, Button, MenuItem, Box, Typography } from '@mui/material';
+import {TextField, Button, MenuItem, Box, Typography, Container, Grid, Paper} from '@mui/material';
 import axiosInstance from "../utils/AxiosInstance.ts";
 import NavBar from "./NavBar.tsx";
 
@@ -118,117 +118,185 @@ const postEvent = async (
 
         <>
             <NavBar/>
-            <br/><br/>
-        <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                maxWidth: 500,
-                margin: '0 auto',
-                mt: 4,
-                p: 2,
-                border: '1px solid #ccc',
-                borderRadius: 2,
-                backgroundColor: '#fafafa',
-            }}
-        >
-            <Typography variant="h5" fontWeight="bold" mb={2} sx={{color: 'grey'}}>
-                Get A Free Quote
-            </Typography>
-<Box display={'flex'} flexDirection={'row'} >
-            <TextField
-                {...register('firstName')}
-                label="Name"
-                error={!!errors.firstName}
-                helperText={errors.firstName?.message}
-                fullWidth
-            />
-
-            <TextField
-                {...register('email')}
-                label="Email"
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                fullWidth
-
-            />
-
-</Box>
-
-            <Box display={'flex'} flexDirection={'row'}>
-            <TextField
-                {...register('phone')}
-                label="Phone"
-                error={!!errors.phone}
-                helperText={errors.phone?.message}
-                fullWidth
-            />
-
-            <TextField
-                {...register('address')}
-                label="Address"
-                error={!!errors.address}
-                helperText={errors.address?.message}
-                fullWidth
-            />
+            <br/><br/><br/>
 
 
+            <Box sx={{ minHeight: "100vh", backgroundColor: "#ffffff" }}>
+                {/* Header */}
+                <Box sx={{ backgroundColor: "#2e7d32", color: "white", py: 3, mb: 4 }}>
+                    <Container maxWidth="lg">
+                        <Typography variant="h4" fontWeight="bold">
+                            GreenClean Lawn Care & Junk Removal
+                        </Typography>
+                        <Typography variant="body2">
+                            Fast. Reliable. Affordable.
+                        </Typography>
+                    </Container>
+                </Box>
+
+                <Container maxWidth="lg">
+                    <Grid container spacing={4}>
+                        {/* Contact Form */}
+                        <Grid item xs={12} md={6}>
+                            <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+                                <Box
+                                    component="form"
+                                    onSubmit={handleSubmit(onSubmit)}
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: 2,
+                                        maxWidth: 500,
+                                        margin: '0 auto',
+                                        mt: 4,
+                                        p: 2,
+                                        border: '1px solid #ccc',
+                                        borderRadius: 2,
+                                        backgroundColor: '#fafafa',
+                                    }}
+                                >
+                                    <Typography variant="h5" fontWeight="bold" mb={2} sx={{color: 'grey'}}>
+                                        Get A Free Quote
+                                    </Typography>
+                                    <Box display={'flex'} flexDirection={'row'} >
+                                        <TextField
+                                            {...register('firstName')}
+                                            label="Name"
+                                            error={!!errors.firstName}
+                                            helperText={errors.firstName?.message}
+                                            fullWidth
+                                        />
+
+                                        <TextField
+                                            {...register('email')}
+                                            label="Email"
+                                            error={!!errors.email}
+                                            helperText={errors.email?.message}
+                                            fullWidth
+
+                                        />
+
+                                    </Box>
+
+                                    <Box display={'flex'} flexDirection={'row'}>
+                                        <TextField
+                                            {...register('phone')}
+                                            label="Phone"
+                                            error={!!errors.phone}
+                                            helperText={errors.phone?.message}
+                                            fullWidth
+                                        />
+
+                                        <TextField
+                                            {...register('address')}
+                                            label="Address"
+                                            error={!!errors.address}
+                                            helperText={errors.address?.message}
+                                            fullWidth
+                                        />
+
+
+                                    </Box>
+
+
+                                    <TextField
+                                        select
+                                        {...register('serviceType')}
+                                        label="Select a service"
+                                        error={!!errors.serviceType}
+                                        helperText={errors.serviceType?.message}
+                                        defaultValue=""
+                                    >
+                                        <MenuItem value="furniture_removal">Furniture Removal</MenuItem>
+                                        <MenuItem value="appliance_removal">Appliance Removal</MenuItem>
+                                        <MenuItem value="mattress_removal">Mattress Removal</MenuItem>
+                                        <MenuItem value="yard_waste">Yard Waste Removal</MenuItem>
+                                        <MenuItem value="garage_cleanout">Garage Cleanout</MenuItem>
+                                        <MenuItem value="moving_cleanout">Moving Cleanout</MenuItem>
+                                        <MenuItem value="estate_cleanout">Estate Cleanout</MenuItem>
+                                        <MenuItem value="general_junk">General Junk Removal</MenuItem>
+                                        <MenuItem value="not_sure"> Need Estimate</MenuItem>
+                                    </TextField>
+
+                                    <TextField
+                                        {...register('message')}
+                                        label="Message"
+                                        multiline
+                                        rows={4}
+                                        error={!!errors.message}
+                                        helperText={errors.message?.message}
+                                    />
+
+
+                                    <Controller
+                                        name="preferredContact"
+                                        control={control}
+                                        defaultValue="email"
+                                        render={({ field }) => (
+                                            <TextField
+                                                select
+                                                {...field}
+                                                label="Preferred Contact"
+                                                error={!!errors.preferredContact}
+                                                helperText={errors.preferredContact?.message}
+                                            >
+                                                <MenuItem value="email">Email</MenuItem>
+                                                <MenuItem value="phone">Phone</MenuItem>
+                                            </TextField>
+                                        )}
+                                    />
+                                    <Button type="submit" variant="contained" color="primary">
+                                        Submit
+                                    </Button>
+                                </Box>
+                            </Paper>
+                        </Grid>
+
+                        {/* Info Section */}
+                        <Grid item xs={12} md={6}>
+                            <Box display="flex" flexDirection="column" gap={3}>
+                                <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
+                                    <Typography variant="h6" fontWeight="600" mb={1}>
+                                        Contact Info
+                                    </Typography>
+                                    <Typography>Phone: (512) 555-1234</Typography>
+                                    <Typography>Email: info@greencleanservices.com</Typography>
+                                    <Typography>Location: Austin, TX</Typography>
+                                </Paper>
+
+                                <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
+                                    <Typography variant="h6" fontWeight="600" mb={1}>
+                                        Business Hours
+                                    </Typography>
+                                    <Typography>Mon - Fri: 7:00 AM - 6:00 PM</Typography>
+                                    <Typography>Saturday: 8:00 AM - 4:00 PM</Typography>
+                                    <Typography>Sunday: Closed</Typography>
+                                </Paper>
+
+                                <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
+                                    <Typography variant="h6" fontWeight="600" mb={1}>
+                                        Why Choose Us?
+                                    </Typography>
+                                    <ul>
+                                        <li>Same-day service available</li>
+                                        <li>Affordable pricing</li>
+                                        <li>Locally owned in Austin</li>
+                                        <li>Eco-friendly disposal</li>
+                                    </ul>
+                                </Paper>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Container>
+
+                {/* Footer */}
+                <Box sx={{ backgroundColor: "#f2f2f2", color: "black", mt: 6, py: 2 }}>
+                    <Typography align="center">
+                        © 2026 GreenClean Services. All rights reserved.
+                    </Typography>
+                </Box>
             </Box>
 
-
-            <TextField
-                select
-                {...register('serviceType')}
-                label="Select a service"
-                error={!!errors.serviceType}
-                helperText={errors.serviceType?.message}
-                defaultValue=""
-            >
-                <MenuItem value="furniture_removal">Furniture Removal</MenuItem>
-                <MenuItem value="appliance_removal">Appliance Removal</MenuItem>
-                <MenuItem value="mattress_removal">Mattress Removal</MenuItem>
-                <MenuItem value="yard_waste">Yard Waste Removal</MenuItem>
-                <MenuItem value="garage_cleanout">Garage Cleanout</MenuItem>
-                <MenuItem value="moving_cleanout">Moving Cleanout</MenuItem>
-                <MenuItem value="estate_cleanout">Estate Cleanout</MenuItem>
-                <MenuItem value="general_junk">General Junk Removal</MenuItem>
-                <MenuItem value="not_sure"> Need Estimate</MenuItem>
-            </TextField>
-
-            <TextField
-                {...register('message')}
-                label="Message"
-                multiline
-                rows={4}
-                error={!!errors.message}
-                helperText={errors.message?.message}
-            />
-
-
-            <Controller
-                name="preferredContact"
-                control={control}
-                defaultValue="email"
-                render={({ field }) => (
-                    <TextField
-                        select
-                        {...field}
-                        label="Preferred Contact"
-                        error={!!errors.preferredContact}
-                        helperText={errors.preferredContact?.message}
-                    >
-                        <MenuItem value="email">Email</MenuItem>
-                        <MenuItem value="phone">Phone</MenuItem>
-                    </TextField>
-                )}
-            />
-            <Button type="submit" variant="contained" color="primary">
-                Submit
-            </Button>
-        </Box>
         </>
     );
 };
